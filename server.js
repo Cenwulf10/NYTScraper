@@ -2,7 +2,8 @@ var express = require("express");
 var path = require("path");
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
-
+var logger = require("morgan");
+var axios = require("axios");
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
 
@@ -15,6 +16,7 @@ var port = process.env.PORT || 3000
 
 var app = express();
 
+app.use(logger("dev"));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
@@ -28,7 +30,10 @@ app.engine("handlebars", exphbs({
     partialsDir: path.join(__dirname, "/views/layouts/partials")
 }));
 app.set("view engine", "handlebars");
-mongoose.connect("");
+mongoose.connect("mongodb://localhost/mongoscraper");
+// axios.get("/scrape", function(req, res) {
+  // var $ = cheerio.load(response.data);
+
 var db = mongoose.connection;
 db.on("error", function(error) {
   console.log("Mongoose Error: ", error);
@@ -64,9 +69,9 @@ app.get("/scrape", function(req, res) {
 
       var result = {};
 
-      result.title = $(this).children("h2").text();
-      result.summary = $(this).children(".summary").text();
-      result.link = $(this).children("h2").children("a").attr("href");
+      result.title = $(this).find("h2").text();
+      result.summary = $(this).find(".summary").text();
+      result.link = $(this).find("h2").find("a").attr("href");
 
       var entry = new Article(result);
 
@@ -177,4 +182,3 @@ app.delete("/notes/delete/:note_id/:article_id", function(req, res) {
 app.listen(port, function() {
   console.log("App running on port " + port);
 });
-

@@ -10,13 +10,15 @@
   "author": "Linette Hsu",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "cheerio": "^1.0.0-rc.1",
-    "express": "^4.15.3",
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
-    "mongoose": "^4.10.6",
-    "morgan": "^1.7.0",
-    "request": "^2.81.0"
+    "mongoose": "^4.13.17",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7",
+    "request": "^2.88.0"
   },
   "devDependencies": {}
 }
